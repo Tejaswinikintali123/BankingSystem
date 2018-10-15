@@ -9,6 +9,7 @@ namespace Bank
 {
     static class Bank
     {
+        private static List<Account> accounts = new List<Account>();
         /// <summary>
         /// create account with the bank
         /// </summary>
@@ -26,8 +27,27 @@ namespace Bank
             {
                 account.Deposit(initialamount);
             }
+            accounts.Add(account);
             return account;
 
+        }
+        public static void Deposit(int accountnumber,decimal amount)
+        {
+            var account = accounts.SingleOrDefault(a => a.AccountNumber == accountnumber);
+            account?.Deposit(amount);
+        }
+        public static void Withdraw(int accountnumber, decimal amount)
+        {
+            var account = accounts.SingleOrDefault(a => a.AccountNumber == accountnumber);
+            if (account == null)
+            {
+                return;
+            }
+            account.Withdraw(amount);
+        }
+        public static IEnumerable<Account> GetAllAccounts()
+        {
+            return accounts;
         }
     }
 }
