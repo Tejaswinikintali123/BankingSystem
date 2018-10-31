@@ -6,3 +6,7 @@
 /bank/bin/Debug
 /bank/obj/Debug
 /.vs/BankingSystem/v14/.suo
+/.vs/BankingSystem/v15
+/BankApplication/bin/Debug/netcoreapp2.1
+/BankApplication/Migrations
+/BankApplication/obj

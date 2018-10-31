@@ -27,56 +27,84 @@ namespace Bank
                     case "0":
                         return;
                     case "1":
-                        Console.WriteLine("enter email adress");
-                        var EmailAddress = Console.ReadLine();
-                        var accounttypes = Enum.GetNames(typeof(TypeofAccount));
-                        for (var i = 0; i < accounttypes.Length; i++)
+                        try
                         {
-                            Console.WriteLine("{0}.{1}", (i + 1), accounttypes[i]);
+                            Console.WriteLine("enter email adress");
+                            var EmailAddress = Console.ReadLine();
+                            var accounttypes = Enum.GetNames(typeof(TypeofAccount));
+                            for (var i = 0; i < accounttypes.Length; i++)
+                            {
+                                Console.WriteLine("{0}.{1}", (i + 1), accounttypes[i]);
+                            }
+                            Console.Write("select accounttype:");
+                            var accounttypeoption = Convert.ToInt32(Console.ReadLine());
+                            var accountType = (TypeofAccount)Enum.Parse(typeof(TypeofAccount), accounttypes[accounttypeoption - 1]);
+                            Console.Write("Amount to deposit: ");
+                            var initialdeposit = Convert.ToDecimal(Console.ReadLine());
+                            var account = Bank.CreateAccount(EmailAddress, accountType, initialdeposit);
+                            Console.WriteLine($"AN:{ account.AccountNumber},AT: { account.AccountType},Balance:{account.Balance}");
                         }
-                        Console.Write("select accounttype:");
-                        var accounttypeoption = Convert.ToInt32(Console.ReadLine());
-                        var accountType = (TypeofAccount)Enum.Parse(typeof(TypeofAccount), accounttypes[accounttypeoption - 1]);
-                        Console.Write("Amount to deposit: ");
-                        var initialdeposit = Convert.ToDecimal(Console.ReadLine());
-                        var account = Bank.CreateAccount(EmailAddress, accountType, initialdeposit);
-                        Console.WriteLine($"AN:{ account.AccountNumber},AT: { account.AccountType},Balance:{account.Balance}");
+                        catch(FormatException fx)
+                        {
+                            Console.WriteLine($"Error:{fx.Message}");
+                        }
+                        catch (IndexOutOfRangeException)
+                        {
+                            Console.WriteLine("Incorrect account type.please try again");
+                        }
+                        catch(ArgumentNullException ax)
+                        {
+                            Console.WriteLine($"Error:{ax.Message}");
+                        }
+                        catch
+                        {
+                            Console.WriteLine("something went wrong:try again");
+                        }
                         break;
                     case "2":
+                        PrintAllAccounts();
                         Console.Write("enter account no.");
                         accountNo = Convert.ToInt32(Console.ReadLine());
                         Console.Write("enter amount to deposit: ");
                         amount = Convert.ToDecimal(Console.ReadLine());
                         Bank.Deposit(accountNo, amount);
+
                         break;
                     case "3":
+                        PrintAllAccounts();
                         Console.Write("enter account no.");
                         accountNo = Convert.ToInt32(Console.ReadLine());
                         Console.Write("enter amount to withdraw: ");
                         amount = Convert.ToDecimal(Console.ReadLine());
-                        Bank.Withdraw(accountNo, amount);
-                        break;
-                    case "4":
-                        var accounts = Bank.GetAllAccounts();
-                        foreach(var acnt in accounts)
+                        try
                         {
-                            Console.WriteLine($"AN:{acnt.AccountNumber},AT: { acnt.AccountType},Balance:{acnt.Balance}");
+                            Bank.Withdraw(accountNo, amount);
                         }
+                        catch(NSFException ex)
+                        {
+                            Console.Write(ex.Message);
+                        }
+                        
+                        break;          
+                    case "4":
+                        PrintAllAccounts();
 
                         break;
 
 
                     default:
                         break;
-
-
-
-
                 }
             }
+        }
 
-
-
+        private static void PrintAllAccounts()
+        {
+            var accounts = Bank.GetAllAccounts();
+            foreach (var acnt in accounts)
+            {
+                Console.WriteLine($"AN:{acnt.AccountNumber},AT: { acnt.AccountType},Balance:{acnt.Balance}");
+            }
         }
     }
 }

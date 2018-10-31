@@ -15,13 +15,12 @@ namespace Bank
     }
     class Account
     {
-        private static int lastAccountNumber = 0;
-
+       
         #region properties
         /// <summary>
         /// Account number for account
         /// </summary>
-        public int AccountNumber { get; }
+        public int AccountNumber { get; set; }
         public TypeofAccount AccountType { get; set; }
         public Decimal Balance { get; private set; }
         public string EmailAddress { get; set; }
@@ -31,7 +30,7 @@ namespace Bank
         #region constructor
         public Account()
         {
-            AccountNumber = ++lastAccountNumber;
+           
             CreatedDate = DateTime.Now;
         }
          #endregion
@@ -46,11 +45,15 @@ namespace Bank
         }
         public void Withdraw(decimal amount)
         {
+            if(amount > Balance)
+            {
+                throw new NSFException("ErrorCode:101", "Insufficient funds.");
+            }
             Balance -= amount;
         }
-     
-        #endregion
 
+        #endregion
+        
 
     }
 
