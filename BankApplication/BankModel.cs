@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Bank
 {
-    class BankModel : DbContext
+    public class BankModel : DbContext
     {
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }

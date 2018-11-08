@@ -20,6 +20,7 @@ namespace Bank
                 Console.WriteLine("2.deposit");
                 Console.WriteLine("3.withdraw");
                 Console.WriteLine("4.print all accounts");
+                Console.WriteLine("5.Print all transactions");
                 Console.Write("please select an option:");
                 var option = Console.ReadLine();
                 switch (option)
@@ -90,8 +91,17 @@ namespace Bank
                         PrintAllAccounts();
 
                         break;
-
-
+                    case "5":
+                        PrintAllAccounts();
+                        Console.WriteLine("Enter Account No:");
+                      accountNo= Convert.ToInt32(Console.ReadLine());
+                        var transactions = Bank.GetAllTransactions(accountNo);
+                        foreach(var transaction in transactions)
+                        {
+                            Console.WriteLine
+                                ($"TT:{transaction.TypeOfTransaction},TD:{transaction.TransactionDate},TA:{transaction.Amount}");
+                        }
+                        break;
                     default:
                         break;
                 }

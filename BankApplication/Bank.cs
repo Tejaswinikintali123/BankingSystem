@@ -51,7 +51,8 @@ namespace Bank
                 TransactionDate = DateTime.Now,
                 TypeOfTransaction = TransactionType.Credit,
                 Description = "Bank deposit",
-                Amount = amount
+                Amount = amount,
+                AccountNumber=accountnumber
 
 
 
@@ -72,7 +73,8 @@ namespace Bank
                 TransactionDate = DateTime.Now,
                 TypeOfTransaction = TransactionType.Debit,
                 Description = "Bank withdrawal",
-                Amount = amount
+                Amount = amount,
+                AccountNumber=accountnumber
 
 
 
@@ -84,7 +86,11 @@ namespace Bank
         {
             return db.Accounts;
         }
-
+        public static IEnumerable<Transaction> GetAllTransactions(int accountNo)
+        {
+           return db.Transactions.Where(t => t.AccountNumber == accountNo).OrderByDescending(t => t.TransactionDate);
+        }
+ 
         private static bool IsValidEmail(string email)
         {
             try

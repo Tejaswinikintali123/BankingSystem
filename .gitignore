@@ -10,3 +10,7 @@
 /BankApplication/bin/Debug/netcoreapp2.1
 /BankApplication/Migrations
 /BankApplication/obj
+/.vs
+/BankUI/bin/Debug/netcoreapp2.1
+/BankUI/obj
+/BankUI/Data/Migrations

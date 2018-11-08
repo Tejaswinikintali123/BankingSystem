@@ -26,6 +26,7 @@ namespace Bank
         public Decimal Balance { get; private set; }
         public string EmailAddress { get; set; }
         public DateTime CreatedDate { get;  }
+        public virtual ICollection <Transaction> Transactions { get; set; }
         #endregion
 
         #region constructor
