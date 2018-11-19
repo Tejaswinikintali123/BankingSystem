@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Bank
 
 {
-    static class Bank
+    public static class BankFactory
     {
         private static BankModel db = new BankModel();
         /// <summary>
@@ -82,9 +82,9 @@ namespace Bank
             db.Transactions.Add(transaction);
             db.SaveChanges();
         }
-        public static IEnumerable<Account> GetAllAccounts()
+        public static IEnumerable<Account> GetAllAccounts(string emailAddress)
         {
-            return db.Accounts;
+            return db.Accounts.Where(a=>a.EmailAddress==emailAddress);
         }
         public static IEnumerable<Transaction> GetAllTransactions(int accountNo)
         {

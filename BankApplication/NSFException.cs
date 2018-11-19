@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bank
 {
-    class NSFException: Exception
+    public class NSFException: Exception
     {
         public NSFException():base("not sufficient fund!")
         {
