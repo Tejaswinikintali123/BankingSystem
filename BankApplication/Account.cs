@@ -25,7 +25,7 @@ namespace Bank
         public TypeofAccount AccountType { get; set; }
         public Decimal Balance { get; private set; }
         public string EmailAddress { get; set; }
-        public DateTime CreatedDate { get;  }
+        public DateTime CreatedDate { get; set; }
         public virtual ICollection <Transaction> Transactions { get; set; }
         #endregion
 

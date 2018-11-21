@@ -90,7 +90,7 @@ namespace Bank
         {
            return db.Transactions.Where(t => t.AccountNumber == accountNo).OrderByDescending(t => t.TransactionDate);
         }
- 
+
         private static bool IsValidEmail(string email)
         {
             try
@@ -103,5 +103,30 @@ namespace Bank
                 return false;
             }
         }
+            public static Account GetAccountDetails(int accountNo)
+        {
+
+            return db.Accounts.SingleOrDefault(m => m.AccountNumber == accountNo);
+        }
+        public static void EditAccount(Account updatedAccount)
+        {
+            var oldAccount = BankFactory.GetAccountDetails(updatedAccount.AccountNumber);
+            oldAccount.EmailAddress= updatedAccount.EmailAddress;
+            oldAccount.AccountType = updatedAccount.AccountType;
+            db.Update(oldAccount);
+            db.SaveChanges();
+
+        }
+        public static void DeleteAccount(int accountNo)
+        {
+            var account = BankFactory.GetAccountDetails(accountNo);
+            db.Accounts.Remove(account);
+            db.SaveChanges();
+        }
+        public static bool AccountExists(int id)
+        {
+            return db.Accounts.Any(e => e.AccountNumber == id);
+        }
     }
+
 }
